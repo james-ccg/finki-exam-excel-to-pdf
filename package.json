@@ -1,0 +1,30 @@
+{
+  "name": "excel-to-pdf",
+  "version": "1.0.0",
+  "description": "Client-side converter for FINKI's exam schedules from Excel to PDF format.",
+  "private": true,
+  "scripts": {
+    "build": "node ./esbuild_config/build.js",
+    "watch": "node ./esbuild_config/watch.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "xdjames (https://github.com/james-ccg)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/james-ccg/finki-exam-excel-to-pdf.git"
+  },
+  "bugs": {
+    "url": "https://github.com/james-ccg/finki-exam-excel-to-pdf/issues"
+  },
+  "homepage": "https://github.com/james-ccg/finki-exam-excel-to-pdf#readme",
+  "devDependencies": {
+    "eslint": "^8.42.0"
+  },
+  "dependencies": {
+    "esbuild": "0.28.1",
+    "pdfmake": "^0.2.20",
+    "xlsx": "^0.18.5"
+  }
+}
