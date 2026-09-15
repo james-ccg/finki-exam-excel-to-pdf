@@ -21,12 +21,29 @@ const DOM = {
   setStatus: (message) => {
     DOM.status.innerText = message;
   },
-  showError: (message) => {
-    DOM.errorBlock.innerHTML = message;
+  // A plain sentence for the visitor, with the technical detail folded away
+  // underneath for anyone reporting it. This used to write the raw stack
+  // trace in as HTML - unreadable to the person the page is for, and a stack
+  // can carry text from the uploaded file itself, which has no business being
+  // parsed as markup. textContent throughout.
+  showError: (error) => {
+    DOM.errorBlock.textContent = "";
+    const summary = document.createElement("p");
+    summary.className = "error-summary";
+    summary.textContent =
+      "Couldn't convert that file. Make sure it's the exam schedule exported from FINKI as .xlsx or .xls - " +
+      "if it is, try saving it again in the older .xls format.";
+    const details = document.createElement("details");
+    const label = document.createElement("summary");
+    label.textContent = "Technical details";
+    const pre = document.createElement("pre");
+    pre.textContent = (error && (error.stack || error.message)) || String(error);
+    details.append(label, pre);
+    DOM.errorBlock.append(summary, details);
     DOM.errorBlock.style.setProperty("display", "block");
   },
   clearError: () => {
-    DOM.errorBlock.innerHTML = "";
+    DOM.errorBlock.textContent = "";
     DOM.errorBlock.style.setProperty("display", "none");
   },
 };
@@ -156,6 +173,6 @@ DOM.inputFile.addEventListener("change", async () => {
   } catch (error) {
     console.error(error);
     DOM.setStatus("Error occurred");
-    DOM.showError(error.stack.replaceAll("\n", "<br>"));
+    DOM.showError(error);
   }
 });
